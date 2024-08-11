@@ -1,3 +1,5 @@
+package com.slyko.simulator.api
+
 import com.slyko.simulator.model.Account
 import com.slyko.simulator.model.AccountUpdate
 import io.ktor.client.*
@@ -9,7 +11,7 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
-class ApiClient(private val client: HttpClient) {
+class AccountApiClient(private val client: HttpClient) {
 
     suspend fun createAccount(account: Account): Account {
         return client.post("http://localhost:8080/account") {
@@ -31,7 +33,7 @@ class ApiClient(private val client: HttpClient) {
     }
 
     companion object {
-        fun createClient(): ApiClient {
+        fun createClient(): AccountApiClient {
             val client = HttpClient {
                 install(ContentNegotiation) {
                     json(Json { ignoreUnknownKeys = true })
@@ -40,7 +42,7 @@ class ApiClient(private val client: HttpClient) {
                     level = LogLevel.INFO
                 }
             }
-            return ApiClient(client)
+            return AccountApiClient(client)
         }
     }
 }

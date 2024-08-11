@@ -1,6 +1,7 @@
 package com.slyko.simulator
 
-import ApiClient
+import com.slyko.simulator.api.AccountApiClient
+import com.slyko.simulator.api.DealApiClient
 import com.slyko.simulator.handler.Simulation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,8 +12,9 @@ import mu.KotlinLogging
 private val logger = KotlinLogging.logger {}
 
 fun main() {
-    val apiClient = ApiClient.createClient()
-    val simulation = Simulation(apiClient)
+    val accountApiClient = AccountApiClient.createClient()
+    val dealApiClient = DealApiClient.createClient()
+    val simulation = Simulation(accountApiClient, dealApiClient)
 
     // Start the simulation loop
     CoroutineScope(Dispatchers.IO).launch {
